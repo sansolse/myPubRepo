@@ -1,1 +1,7 @@
-/home/ephist/.zshrc.aliases
+alias ls="command ls -AFlh --color=auto --group-directories-first"
+alias myalias="gvim ~/.zshrc.aliases"
+alias myfunc="gvim ~/.zshrc.functions"
+alias myvim="gvim ~/.gvimrc"
+alias rld="source ~/.zshrc"
+alias u="cd .."
+alias v="gvim"
