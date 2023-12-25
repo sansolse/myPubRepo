@@ -58,6 +58,10 @@ gitpush() {
     git push -u origin main
 }
 
+gitpull() {
+    git pull origin main
+}
+
 bu() {
     if [ $# -ne 1 ]; then
         echo "Usage: bu <filename>"
