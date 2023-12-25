@@ -1,0 +1,90 @@
+
+# Define ANSI color codes
+Black="\033[0;30m"
+Red="\033[0;31m"
+Green="\033[0;32m"
+Yellow="\033[0;33m"
+Blue="\033[0;34m"
+Magenta="\033[0;35m"
+Cyan="\033[0;36m"
+White="\033[0;37"
+NC="\033[0m" # No Color
+
+function rm() {
+    # Check if each file or directory exists
+    local exists=0
+    for file in "$@"; do
+        if [[ -e $file ]]; then
+            exists=1
+            break
+        fi
+    done
+
+    # If none exist, print a warning message and exit
+    if [[ $exists -eq 0 ]]; then
+        echo -e "${Red}No such file or directory.${NC}"
+        return
+    fi
+
+    # Display the list of targets for deletion in red
+    echo -e "Are you sure you want to delete the following?${Red}"
+    for file in "$@"; do
+        if [[ -e $file ]]; then
+            echo -e "${Red}$file${NC}"
+        fi
+    done
+
+    # Ask for user confirmation
+    read -q "REPLY?Press y to continue: "
+    echo
+
+    # If the user inputs 'y', proceed with deletion
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        command rm -r "$@"
+    else
+        echo -e "${Red}Deletion cancelled.${NC}"
+    fi
+}
+
+gitpush() {
+    if [ -z "$1" ]; then
+        COMMIT_MSG=$(date +"%Y-%m-%d %H:%M:%S")
+    else
+        COMMIT_MSG="$1"
+    fi
+
+    git add ~/myPubRepo
+    git commit -m "$COMMIT_MSG"
+    git push -u origin main
+}
+
+bu() {
+    if [ $# -ne 1 ]; then
+        echo "Usage: bu <filename>"
+        return 1
+    fi
+
+    local filename="$1"
+    local datetime="$(date +'%Y%m%d%H%M%S')"
+    local extension="${filename##*.}"
+    local basename="${filename%.*}"
+    local backup_filename="${basename}_${datetime}.${extension}"
+
+    if [ -e "$filename" ]; then
+        cp "$filename" "$backup_filename"
+        echo "Backup created: $backup_filename"
+    else
+        echo "File not found: $filename"
+        return 1
+    fi
+}
+
+
+
+function cd() {
+    builtin cd "$@" && ls
+}
+
+function ls() {
+    command ls -AFlh --color=auto --group-directories-first && echo -e "${Cyan}`pwd`/${NC}"
+}
