@@ -111,4 +111,3 @@ setopt HIST_SAVE_NO_DUPS
 
 source ~/.zshrc.aliases
 source ~/.zshrc.functions
-
