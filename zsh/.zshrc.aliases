@@ -1,4 +1,5 @@
 alias ls="command ls -AFlh --color=auto --group-directories-first"
+alias myzsh="gvim ~/.zshrc"
 alias myalias="gvim ~/.zshrc.aliases"
 alias myfunc="gvim ~/.zshrc.functions"
 alias myvim="gvim ~/.gvimrc"
